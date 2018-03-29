@@ -4,12 +4,15 @@ import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory' //TODO TO DO
 import rootReducer from './reducers'
 
-export const history = createHistory()
 
-let initialState = {}
+
+let initialState = {}, history = {};
 if(typeof window !== 'undefined') {
   initialState = window.__INITIAL_STATE__;
+  history = createHistory();
 }
+
+export { history };
 
 const enhancers = []
 const middleware = [
