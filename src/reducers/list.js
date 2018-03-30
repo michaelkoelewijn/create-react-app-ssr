@@ -17,6 +17,13 @@ export default (state = initialState, action) => {
             items: action.payload
         }
     }
+    
+    case 'FETCH_INITIAL_ABOUT_DATA': {
+        return {
+            ...state,
+            items: action.payload
+        }
+    }
 
     default:
       return state

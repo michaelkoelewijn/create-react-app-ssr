@@ -7,12 +7,13 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+
 import Helmet from 'react-helmet';
 import rootReducer from '../src/reducers';
 import App from '../src/containers/App';
 import page from './page';
 
-import { matchRoutes } from "react-router-config"
+import { renderRoutes, matchRoutes } from "react-router-config"
 import { routes } from "./routes"
 
 
@@ -44,7 +45,7 @@ app.get("*", (req, res) => {
         const content = renderToString( 
             <Provider store={store}>
                 <StaticRouter context={{}} location={url}>
-                    <App />
+                    { renderRoutes(routes) }
                 </StaticRouter>
             </Provider>
         )
@@ -53,25 +54,6 @@ app.get("*", (req, res) => {
         res.status(200).send(page(content, helmet, store.getState()));
 
     })
-    
-    // let initialData = {
-    //     list: {
-    //         count: 2
-    //     }
-    // }
-    
-
-    // const store = createStore(rootReducer, initialData);
-    // const REACT_HTML = renderToString(
-    //     <Provider store={store}>
-    //         <StaticRouter context={{}} location={req.url} >
-    //             <App />
-    //         </StaticRouter>
-    //     </Provider>
-    // )
-    
-    // const helmet = Helmet.renderStatic();
-    // return res.status(200).send(page(REACT_HTML, helmet, store.getState()));
 
 });
 
