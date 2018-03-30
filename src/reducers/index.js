@@ -4,5 +4,5 @@ import list from './list'
 
 export default combineReducers({
   router: routerReducer,
-  list
+  list: list
 })

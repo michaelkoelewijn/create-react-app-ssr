@@ -5,14 +5,11 @@ import createHistory from 'history/createBrowserHistory' //TODO TO DO
 import rootReducer from './reducers'
 
 
+export const history = createHistory();
 
-let initialState = {}, history = {};
-if(typeof window !== 'undefined') {
-  initialState = window.__INITIAL_STATE__;
-  history = createHistory();
-}
-
-export { history };
+const initialData = window.__INITIAL_STATE__;
+// Allow the passed state to be garbage-collected
+delete window.__INITIAL_STATE__;
 
 const enhancers = []
 const middleware = [
@@ -35,6 +32,6 @@ const composedEnhancers = compose(
 
 export default createStore(
   rootReducer,
-  initialState,
+  initialData,
   composedEnhancers
 )
