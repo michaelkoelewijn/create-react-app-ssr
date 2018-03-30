@@ -1,5 +1,6 @@
 const initialState = {
-    count: 0
+    count: 0,
+    items: []
 }
 
 export default (state = initialState, action) => {
@@ -9,6 +10,13 @@ export default (state = initialState, action) => {
             ...state,
             count: state.count + 1
         }
+
+    case 'FETCH_INITIAL_DATA': {
+        return {
+            ...state,
+            items: action.payload
+        }
+    }
 
     default:
       return state

@@ -4,9 +4,13 @@ import {Helmet} from "react-helmet";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { increment } from '../actions/list';
+import { increment, fetchInitialData } from '../actions/list';
 
 class Home extends React.Component {
+
+    componentDidMount() {
+        this.props.actions.fetchInitialData();
+    }
 
     handleClick() {
         this.props.actions.increment();
@@ -14,7 +18,9 @@ class Home extends React.Component {
 
     render() {
 
-        const { count } = this.props;
+        const { count, items } = this.props;
+
+        let renderedItems = items.map((item, index) => <li key={index}>{item}</li>);
 
         return (
             <div>
@@ -25,6 +31,9 @@ class Home extends React.Component {
                 <h1>Homepage</h1>
                 Clicked { count } times
                 <button onClick={this.handleClick.bind(this)}>Increment</button>
+
+                <ul>{renderedItems}</ul>
+
             </div>
         )
     }
@@ -32,13 +41,14 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        count: state.list.count
+        count: state.list.count,
+        items: state.list.items
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ increment }, dispatch)
+        actions: bindActionCreators({ increment, fetchInitialData }, dispatch)
     }
 }
 
