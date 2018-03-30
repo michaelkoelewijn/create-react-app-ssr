@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  Link, 
-  Route,
-  Switch
-} from 'react-router-dom';
-
-import Home from './Home';
-import About from './About';
+import { Link } from 'react-router-dom';
+import { routes } from "../routes"
+import { renderRoutes } from "react-router-config"
 
 export default (props) => {
   return (
@@ -15,10 +10,8 @@ export default (props) => {
       <Link to="/">Home</Link>
       <Link to="/about">About</Link>
 
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/about"  component={About} />
-      </Switch>
+      { renderRoutes(routes) }
+    
     </div>
   )
 }

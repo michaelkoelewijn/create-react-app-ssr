@@ -14,8 +14,7 @@ import App from '../src/containers/App';
 import page from './page';
 
 import { renderRoutes, matchRoutes } from "react-router-config"
-import { routes } from "./routes"
-
+import { routes } from "../src/routes"
 
 // Initialize Express server
 const app = express();
@@ -45,7 +44,7 @@ app.get("*", (req, res) => {
         const content = renderToString( 
             <Provider store={store}>
                 <StaticRouter context={{}} location={url}>
-                    { renderRoutes(routes) }
+                    <App />
                 </StaticRouter>
             </Provider>
         )

@@ -1,7 +1,7 @@
-import Home from '../src/containers/Home';
-import About from '../src/containers/About';
+import Home from './containers/Home';
+import About from './containers/About';
 
-import { fetchInitialData, fetchInitialAboutData } from '../src/actions/list';
+import { fetchInitialData, fetchInitialAboutData } from './actions/list';
 
 export const routes = [
     {
