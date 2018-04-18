@@ -3,7 +3,8 @@ import fs from 'fs';
 import path from 'path';
 
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
@@ -26,16 +27,25 @@ app.set('port', PORT);
 // Serve built files with static files middleware
 app.use(express.static(path.join(__dirname, '../build'), {index: '_'}));
 
+var axios = require('axios');
+
 // Handle request
 app.get("*", (req, res) => {
     
-    const store = createStore(rootReducer);
+    const store = createStore(rootReducer, applyMiddleware(thunk));
     const { url } = req
     // For each route that matches
     const promises = matchRoutes(routes, url).map(({route, match}) => {
       // Load the data for that route. Include match information
       // so route parameters can be passed through.
-      return store.dispatch(route.loadData(match))
+      return store.dispatch(dispatch => {
+            return axios.get('https://jsonplaceholder.typicode.com/todos').then(response => {
+                dispatch({
+                    type: "FETCH_INITIAL_DATA", 
+                    payload: ['Test 1', 'Test 2', 'Test 3', 'Test 4']
+                })
+            })
+        })
     })
 
     // Wait for all the data to load
