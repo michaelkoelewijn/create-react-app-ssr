@@ -14,5 +14,9 @@ export const routes = [
         path: '/about',
         component: About,
         loadData: fetchInitialAboutData
+    },
+    {
+        path: '/test',
+        component: About
     }
 ]

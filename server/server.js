@@ -39,7 +39,10 @@ app.get("*", (req, res) => {
     const promises = matchRoutes(routes, url).map(({route, match}) => {
         // Load the data for that route. Include match information
         // so route parameters can be passed through.
-        return store.dispatch(route.loadData(match));
+        if(typeof route.loadData === 'function') {
+            return store.dispatch(route.loadData(match));
+        }
+        return true;
     })
 
     // Wait for all the data to load
